@@ -1,0 +1,54 @@
+body{
+    overflow: scroll;
+    background-color:#20262e;
+}
+svg{
+    float:right;
+    border-style:solid ;
+    border-width: 6px;
+    border-color: #625D5D;
+    background-color:#d9d9d9;
+}
+#restore-button{
+    height: 50px;
+    width: 100px;
+    float: right;
+    clear: right;
+}
+#clearSvg-button{
+    height: 50px;
+    width: 100px;
+    float: right;
+}
+#docpicker{
+    color: white;
+}
+h1{
+    color: white;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+h2{
+    color: white;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+.links line {
+    stroke:#996600;
+    stroke-opacity: 2;
+}
+.nodes circle {
+    stroke:#625D5D;
+    stroke-width: 2px;
+}
+
+.legend-labels{
+    font-size: 19px;
+    color: white;
+    list-style-type: square;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+#end-arrow {
+    fill:   #996600;
+    stroke: #625D5D;
+    stroke-opacity: 0.5;
+    fill-opacity: 2;
+}

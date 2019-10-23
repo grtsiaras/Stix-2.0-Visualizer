@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Stix Visualizer</title>
+</head>
+<body>
+    <h1>Welcome to the Stix Visualizer</h1>
+    <input type="file" id="docpicker">
+    <svg id="viz"  width="1250" height="750"></svg>
+    <input id="restore-button" type="button" value="Restore">
+    <input id="clearSvg-button" type="button" value="Clear">
+    <h2>Legend</h2>
+    <ul class='legend-labels'>
+        <li><span><img src="images/attack_pattern.png" width="20px" height="20px"></span>Attack Pattern</li>
+        <li><span><img src="images/campaign.png" width="20px" height="20px"></span>Campaign</li>
+        <li><span><img src="images/course_of_action.png" width="20px" height="20px"></span>Course of Action</li>
+        <li><span><img src="images/identity.png" width="20px" height="20px"></span>Identity</li>
+        <li><span><img src="images/indicator.png" width="20px" height="20px"></span>Indicator</li>
+        <li><span><img src="images/intrusion_set.png" width="20px" height="20px"></span>Intrusion Set</li>
+        <li><span><img src="images/malware.png" width="20px" height="20px"></span>Malware</li>
+        <li><span><img src="images/marking_def.png" width="20px" height="20px"></span>Marking Definition</li>
+        <li><span><img src="images/observed_data.png" width="20px" height="20px"></span>Observed Data</li>
+        <li><span><img src="images/report.png" width="20px" height="20px"></span>Report</li>
+        <li><span><img src="images/sighting.png" width="20px" height="20px"></span>Sighting</li>
+        <li><span><img src="images/threat_actor.png" width="20px" height="20px"></span>Threat Actor</li>
+        <li><span><img src="images/tool.png" width="20px" height="20px"></span>Tool</li>
+        <li><span><img src="images/vulnerability.png" width="20px" height="20px"></span>Vulnerability</li>
+    </ul>
+
+    <div id="list-property" style="visibility: hidden">
+        <h2>Properties</h2>
+        <ul class="legend-labels">
+            <li id="List-Id"></li>
+            <li id="List-Type"></li>
+            <li id="List-Created"></li>
+            <li id="List-Modified"></li>
+            <li id="List-Name"></li>
+            <li id="List-Pivot1"></li>
+            <li id="List-Pivot2"></li>
+            <li id="List-Pivot3"></li>
+            <li id="List-Pivot4"></li>
+            <li id="List-Pivot5"></li>
+        </ul>
+    </div>
+    <div id="description-block" style="visibility: hidden">
+        <h2>Description</h2></span>
+        <p id="description" class="legend-labels"></p>
+    </div>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="forceChart.js"></script>
+</body>
+</html>
