@@ -1,21 +1,31 @@
+let fileFlag = false;
+let gLink;
+let gNode;
 document.getElementById('docpicker').addEventListener(
     'change', 
     changeEvent => {
       changeEvent.stopPropagation();
       changeEvent.preventDefault();
-      readJsonFile(changeEvent.target.files[0]);
+        if (!fileFlag) {
+            fileFlag = true;
+            readJsonFile(changeEvent.target.files[0]);
+            swal("Stix2Viz","File uploaded successfully.","success");
+        }
+        else {
+            swal("Stix2Viz","There is a file arleady uploaded.\nUse the Clear button first then select a new file.","error");
+        }
     },
     false
   );
   // JSON FILE READER
 function readJsonFile(jsonFile) {
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.addEventListener('load', (loadEvent) => {
       try {
-        json = JSON.parse(loadEvent.target.result);
-        var links_data=[];
-        var nodes_data=[];
-        for (var i = 0; i < json.objects.length; i++) {
+        let json = JSON.parse(loadEvent.target.result);
+        let links_data=[];
+        let nodes_data=[];
+        for (let i = 0; i < json.objects.length; i++) {
             if (json.objects[i].type === 'relationship') {
                 links_data.push(json.objects[i]);
             }
@@ -24,10 +34,10 @@ function readJsonFile(jsonFile) {
             }
         }
         //Set up the SVG element.
-        var svg = d3.select("svg"),
+        let svg = d3.select("svg"),
         width = +svg.attr("width"),
         height = +svg.attr("height");
-        var defs = svg.append('svg:defs');
+        let defs = svg.append('svg:defs');
 
 
         //The patterns of the images
@@ -174,7 +184,7 @@ function readJsonFile(jsonFile) {
 
 
         //Set up the simulation
-        var simulation = d3.forceSimulation()
+        let simulation = d3.forceSimulation()
             .nodes(nodes_data);
         //Add forces to the simulation.
         simulation
@@ -184,17 +194,17 @@ function readJsonFile(jsonFile) {
         //Update circle positions to reflect node updates on each tick of the simulation.
         simulation.on("tick", tickActions );
         //add encompassing group for the zoom
-        var g = svg.append("g")
+        let g = svg.append("g")
             .attr("class", "everything");
 
 
 
 
 
-        var links_data1=[];
-        for(var j=0;j<links_data.length;j++){
-            var strLink=JSON.stringify(links_data[j]);
-            var arr=JSON.parse(strLink);
+        let links_data1=[];
+        for(let j=0;j<links_data.length;j++){
+            let strLink=JSON.stringify(links_data[j]);
+            let arr=JSON.parse(strLink);
             arr.source=arr.source_ref;
             arr.target=arr.target_ref;
             delete arr.source_ref;
@@ -207,12 +217,10 @@ function readJsonFile(jsonFile) {
 
 
         //forceLink and link distance
-        var link_force =  d3.forceLink(links_data1)
+        let link_force =  d3.forceLink(links_data1)
             .id(function(d) {
                 return d.id; })
             .distance(60);
-
-        simulation.force("links",link_force);
 
         defs.selectAll('marker')
             .data([{ id: 'end-arrow', opacity:1}])
@@ -232,7 +240,7 @@ function readJsonFile(jsonFile) {
 
 
 
-        var link = g.append("g")
+        let link = g.append("g")
             .attr("class", "links")
             .selectAll("path")
             .data(links_data1)
@@ -242,7 +250,8 @@ function readJsonFile(jsonFile) {
             })
             .attr("marker-end", "url(#end-arrow)");
         //Draw the circles for the nodes.
-        var node = g.append("g")
+        gLink = link;
+        let node = g.append("g")
             .attr("class", "nodes")
             .selectAll("circle")
             .data(nodes_data)
@@ -293,11 +302,10 @@ function readJsonFile(jsonFile) {
                     return "url(#myPattern14)";
                 }
             });
-
-
-
+          
+        gNode = node;
         //add zoom capabilities
-        var zoom_handler = d3.zoom()
+        let zoom_handler = d3.zoom()
             .on("zoom", zoom_actions);
 
         zoom_handler(svg);
@@ -308,14 +316,14 @@ function readJsonFile(jsonFile) {
 
 
         //Set up the drag handler.
-        var drag_handler=d3.drag()
+        let drag_handler=d3.drag()
             .on("start",drag_start)
             .on("drag",drag_drag)
             .on("end",drag_end);
 
         function getNeighbors(d){
-            var neighbors=[];
-            for(var i=0;i<links_data1.length;i++){
+            let neighbors=[];
+            for(let i=0;i<links_data1.length;i++){
             if(links_data1[i].target.id===d.id){
                 neighbors.push(links_data1[i].source.id);
                 }
@@ -332,8 +340,8 @@ function readJsonFile(jsonFile) {
             d.fy = d.y;
             d3.selectAll("circle").style("stroke","#625D5D");
             d3.select(this).style("stroke","   #990099");
-            var neighbors=getNeighbors(d);
-            for(var i=0;i<nodes_data.length;i++){
+            let neighbors=getNeighbors(d);
+            for(let i=0;i<nodes_data.length;i++){
                 if(neighbors.indexOf(d3.selectAll("g.nodes").nodes()[0].childNodes[i].__data__.id)==-1){
                     d3.selectAll("g.nodes").nodes()[0].childNodes[i].style.opacity='0.1';
                 }
@@ -347,7 +355,7 @@ function readJsonFile(jsonFile) {
             }
 
             d3.select(this).style('opacity',1);
-            for(var j=0;j<links_data1.length;j++){
+            for(let j=0;j<links_data1.length;j++){
                 if(link._groups[0][j].__data__.source.id===d.id || link._groups[0][j].__data__.target.id===d.id){
                     link._groups[0][j].style.opacity='1';
                 }
@@ -617,7 +625,8 @@ function readJsonFile(jsonFile) {
         //Add the drag handler on.
         drag_handler(node);
 
-        var radius = 5;
+        let radius = 5;
+        simulation.force("links",link_force);
         function tickActions() {
             node
                 .attr("cx", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
@@ -629,16 +638,33 @@ function readJsonFile(jsonFile) {
                 .attr("x2", function(d) { return d.target.x; })
                 .attr("y2", function(d) { return d.target.y; });
         }
-        document.getElementById('restore-button').addEventListener('click',function () {
-            node.style('opacity',1);
-            link.style('opacity',1);
-        })
-        document.getElementById('clearSvg-button').addEventListener('click',function () {
-            d3.selectAll("svg > *").remove();            
-        })
       }catch (error) {
         console.error(error);
       }
     });
     reader.readAsText(jsonFile);
 }
+
+document.getElementById('restore-button').addEventListener('click',function () {
+        if (fileFlag) {
+            gLink.style('opacity',1);
+            gNode.style('opacity',1);
+        } else {
+            swal("Stix2Viz","There is no file to restore.","error");
+        }
+
+    });
+
+document.getElementById('clearSvg-button').addEventListener('click',function () {
+        swal({
+            title: "Stix2Viz",
+            text: "Do you want to load a new file?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                fileFlag = false;
+                location.reload();}
+        });
+    });
