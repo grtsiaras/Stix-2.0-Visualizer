@@ -1,4 +1,4 @@
-# STIX 2.0 Visualization
+# Stix2Viz
 # Cyberthreat Vizualization using the Stix 2 Specification
 # Created by Nikolaos Pavlidis (nikospav07) and Georgios Tsiaras (grtsiaras)
 

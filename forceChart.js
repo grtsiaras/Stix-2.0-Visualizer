@@ -360,6 +360,14 @@ function readJsonFile(jsonFile) {//The implementation of readJsonFile function
                 }
             }
             //Display the properties of the selected node depending on the node type.
+                document.querySelector('#List-Pivot1').setAttribute('style','visibility:hidden');
+                document.querySelector('#List-Pivot2').setAttribute('style','visibility:hidden');
+                document.querySelector('#List-Pivot3').setAttribute('style','visibility:hidden');
+                document.querySelector('#List-Pivot4').setAttribute('style','visibility:hidden');
+                document.querySelector('#List-Pivot5').setAttribute('style','visibility:hidden');
+                document.querySelector('#List-Pivot6').setAttribute('style','visibility:hidden');
+                document.querySelector('#List-Pivot7').setAttribute('style','visibility:hidden');
+                document.querySelector('#List-Pivot8').setAttribute('style','visibility:hidden');
             if (d.type === "malware"){
                 document.querySelector('#list-property').setAttribute('style','visibility:visible');
                 document.querySelector('#description-block').setAttribute('style','visibility:visible');
@@ -449,12 +457,14 @@ function readJsonFile(jsonFile) {//The implementation of readJsonFile function
                 document.querySelector('#List-Modified').textContent = 'Modified: '+d.modified;
                 document.querySelector('#List-Name').textContent = 'Name: '+d.name;
                 document.querySelector('#description').textContent = d.description;
+                /*if (false){
+                     document.querySelector('#List-Pivot1').setAttribute('style','visibility:visible');
+                    document.querySelector('#List-Pivot1').textContent ="External Ref: "+d.external_references[0].source_name+"/"+d.external_references[0].description+"/"+d.external_references[0].external_id;
+                }*/
                 document.querySelector('#List-Pivot1').setAttribute('style','visibility:visible');
-                document.querySelector('#List-Pivot1').textContent ="External Ref: "+d.external_references[0].source_name+"/"+d.external_references[0].description+"/"+d.external_references[0].external_id;
+                document.querySelector('#List-Pivot1').textContent = "Kill Chain Phases: "+d.kill_chain_phases[0].kill_chain_name+"/"+d.kill_chain_phases[0].phase_name;
+                document.querySelector('#List-Pivot2').textContent = "Created by: "+d.created_by_ref;
                 document.querySelector('#List-Pivot2').setAttribute('style','visibility:visible');
-                document.querySelector('#List-Pivot2').textContent = "Kill Chain Phases: "+d.kill_chain_phases[0].kill_chain_name+"/"+d.kill_chain_phases[0].phase_name;
-                document.querySelector('#List-Pivot3').textContent = "Created by: "+d.created_by_ref;
-                document.querySelector('#List-Pivot3').setAttribute('style','visibility:visible');
                 document.querySelector('#List-Pivot4').setAttribute('style','visibility:hidden');
                 document.querySelector('#List-Pivot5').setAttribute('style','visibility:hidden');
                 document.querySelector('#List-Pivot6').setAttribute('style','visibility:hidden');
